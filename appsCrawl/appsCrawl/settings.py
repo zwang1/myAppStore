@@ -14,6 +14,50 @@ BOT_NAME = 'appsCrawl'
 SPIDER_MODULES = ['appsCrawl.spiders']
 NEWSPIDER_MODULE = 'appsCrawl.spiders'
 
+ITEM_PIPELINES = ['appsCrawl.pipelines.AppscrawlPipeline']
+ITEM_PIPELINES = ['appsCrawl.pipelines.AppListPipeline']
+
+
+MONGODB_SERVER = "localhost"
+MONGODB_PORT = 27017
+MONGODB_DB = "appstore"
+MONGODB_COLLECTION = "apps"
+MONGODB_COLLECTION2 = "appsfromlist"
+
+DOWNLOADER_MIDDLEWARES = {
+    'scrapyjs.SplashMiddleware': 725,
+    #'appsCrawl.random_useragent.RandomUserAgentMiddleware': 400,
+    'appsCrawl.random_proxy.ProxyMiddleware': 100,
+    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+}
+
+# Retry many times since proxies often fail
+RETRY_TIMES = 10
+# Retry on most error codes since proxies fail for different reasons
+RETRY_HTTP_CODES = [500, 503, 504, 400, 403, 404, 408]
+
+
+USER_AGENT_LIST = [
+    'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.36 Safari/535.7',
+    'Mozilla/5.0 (Windows NT 6.2; Win64; x64; rv:16.0) Gecko/16.0 Firefox/16.0',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/534.55.3 (KHTML, like Gecko) Version/5.1.3 Safari/534.53.10'
+]
+
+PROXIES = [
+    {'ip_port': '111.11.228.75:80', 'user_pass': ''},
+    {'ip_port': '120.198.243.22:80', 'user_pass': ''},
+    {'ip_port': '111.8.60.9:8123', 'user_pass': ''},
+    {'ip_port': '101.71.27.120:80', 'user_pass': ''},
+    {'ip_port': '122.96.59.104:80', 'user_pass': ''},
+    {'ip_port': '122.224.249.122:8088', 'user_pass': ''},
+]
+
+
+SPLASH_URL = 'http://localhost:8050'
+DUPEFILTER_CLASS = 'scrapyjs.SplashAwareDupeFilter'
+HTTPCACHE_STORAGE = 'scrapyjs.SplashAwareFSCacheStorage'
+
+
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'appsCrawl (+http://www.yourdomain.com)'

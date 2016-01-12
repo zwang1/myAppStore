@@ -16,3 +16,6 @@ class AppscrawlItem(scrapy.Item):
     desc = scrapy.Field()
     appId  = scrapy.Field()
 
+class AppListItem(scrapy.Item):
+    title = scrapy.Field()
+    list = scrapy.Field()
